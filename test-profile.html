@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background: #ab2654;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background: #8a1f47;
+        }
+        .slide {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 100vh;
+            background: linear-gradient(180deg, #ab2654 0%, #ff4e6a 100%);
+            color: white;
+            padding: 20px;
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+            z-index: 50;
+        }
+        .slide.open {
+            transform: translateX(0);
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            display: none;
+            z-index: 40;
+        }
+        .overlay.visible {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Profile Test</h1>
+    <button onclick="toggleProfile()">Open Profile</button>
+    
+    <div class="overlay" id="overlay"></div>
+    <div class="slide" id="profileSlide">
+        <h2>My Profile</h2>
+        <p>Name: Test User</p>
+        <p>Email: test@example.com</p>
+        <button onclick="toggleProfile()">Close</button>
+    </div>
+
+    <script>
+        function toggleProfile() {
+            console.log('toggleProfile called');
+            const slide = document.getElementById('profileSlide');
+            const overlay = document.getElementById('overlay');
+            
+            slide.classList.toggle('open');
+            overlay.classList.toggle('visible');
+            
+            console.log('Slide classes:', slide.className);
+            console.log('Overlay classes:', overlay.className);
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Test page loaded');
+        });
+    </script>
+</body>
+</html>

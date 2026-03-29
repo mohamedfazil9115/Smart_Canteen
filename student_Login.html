@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Student Login - Canteen App</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ab2654",
+                        "background-light": "#f8f6f7",
+                        "background-dark": "#1f1317",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .main-gradient {
+            background: linear-gradient(180deg, #A92655 0%, #FD8D67 100%);
+        }
+        .btn-gradient {
+            background: linear-gradient(90deg, #ab2654 0%, #d83b6e 100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+<div class="relative min-h-screen w-full overflow-hidden main-gradient flex flex-col items-center justify-center px-6">
+<!-- Status Bar Spacer (iOS) -->
+<div class="h-12 w-full"></div>
+<!-- Top App Bar / Header -->
+<div class="w-full max-w-[400px] flex items-center justify-between mb-8">
+<button id="loginBackBtn" class="text-white flex size-10 shrink-0 items-center justify-center bg-white/10 rounded-full cursor-pointer hover:bg-white/20 transition-colors">
+<span class="material-symbols-outlined">arrow_back_ios_new</span>
+</button>
+<h2 class="text-white text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-10">Sign In</h2>
+</div>
+<!-- Main Login Card (Glassmorphism) -->
+<div class="glass-card w-full max-w-[400px] rounded-xl p-8 shadow-2xl">
+<!-- Headline Text -->
+<div class="text-center mb-8">
+<h1 class="text-white text-3xl font-extrabold leading-tight tracking-tight mb-2">Welcome Back</h1>
+<p class="text-white/80 text-base font-normal">Login to skip the canteen lines</p>
+</div>
+<!-- Form Fields -->
+<div class="space-y-5">
+<!-- Student ID Field -->
+<div class="flex flex-col gap-2">
+<label class="text-white/90 text-sm font-semibold ml-1">Student ID</label>
+<div class="relative">
+<input class="w-full bg-white/10 border border-white/30 rounded-full h-14 px-6 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-transparent transition-all" placeholder="e.g. 2024001" type="text"/>
+<span class="material-symbols-outlined absolute right-5 top-1/2 -translate-y-1/2 text-white/50">person</span>
+</div>
+</div>
+<!-- Password Field -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center ml-1">
+<label class="text-white/90 text-sm font-semibold">Password</label>
+<a id="forgotPasswordLink" class="text-white/70 text-xs hover:text-white transition-colors cursor-pointer">Forgot Password?</a>
+</div>
+<div class="relative">
+<input class="w-full bg-white/10 border border-white/30 rounded-full h-14 px-6 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-transparent transition-all" placeholder="••••••••" type="password"/>
+<span class="material-symbols-outlined absolute right-5 top-1/2 -translate-y-1/2 text-white/50 cursor-pointer">visibility</span>
+</div>
+</div>
+<!-- CTA Button -->
+<div class="pt-4">
+<button class="btn-gradient w-full h-14 rounded-full text-white font-bold text-lg shadow-lg shadow-primary/30 active:scale-[0.98] transition-transform">
+                        Login &amp; Order
+                    </button>
+</div>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="mt-8 text-center">
+<p class="text-white/90 font-medium">
+                New student? 
+                <a id="createAccountLink" class="text-white font-bold underline underline-offset-4 decoration-2 cursor-pointer">Create account</a>
+</p>
+</div>
+<!-- Branding / Visual Accent -->
+<div class="mt-auto mb-10 flex flex-col items-center opacity-60">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-white text-3xl">restaurant</span>
+<span class="text-white font-extrabold tracking-tighter text-xl">CANTEEN</span>
+</div>
+<div class="w-32 h-1 bg-white/30 rounded-full"></div>
+</div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('Login page loaded');
+    
+    // Back button
+    const loginBackBtn = document.getElementById('loginBackBtn');
+    if (loginBackBtn) {
+      loginBackBtn.addEventListener('click', () => {
+        console.log('Back button clicked');
+        window.location.href = 'index.html';
+      });
+    }
+
+    // Get input fields: Student ID and Password
+    const allInputs = document.querySelectorAll('input[type="text"], input[type="password"]');
+    console.log('Found inputs:', allInputs.length);
+
+    // Login button
+    const loginBtn = document.querySelector('.btn-gradient');
+    if (loginBtn) {
+      loginBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        console.log('Login button clicked');
+        
+        const studentId = allInputs[0]?.value.trim() || '';
+        const password = allInputs[1]?.value.trim() || '';
+        
+        console.log('Login attempt with:', { studentId, password });
+
+        if (!studentId) {
+          alert('❌ Please enter Student ID');
+          allInputs[0]?.focus();
+          return;
+        }
+        if (!password) {
+          alert('❌ Please enter Password');
+          allInputs[1]?.focus();
+          return;
+        }
+
+        // Get registered users from localStorage
+        const users = JSON.parse(localStorage.getItem('registeredUsers') || '{}');
+        console.log('Registered users:', Object.keys(users));
+        
+        if (users[studentId] && users[studentId].password === password) {
+          console.log('Login successful for:', studentId);
+          // Store logged-in user info
+          localStorage.setItem('currentUser', JSON.stringify({
+            studentId: studentId,
+            name: users[studentId].name,
+            email: users[studentId].email
+          }));
+          alert('✅ Login successful!');
+          window.location.href = 'menu.html';
+        } else {
+          console.log('Login failed - invalid credentials');
+          alert('❌ Invalid Student ID or Password.\n\nPlease try again or create a new account.');
+        }
+      });
+    }
+
+    // Create account link - USING ID
+    const createLink = document.getElementById('createAccountLink');
+    if (createLink) {
+      createLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        console.log('Create account link clicked');
+        window.location.href = 'signup.html';
+      });
+    } else {
+      console.error('Create account link not found!');
+    }
+
+    // Forgot password link - USING ID
+    const forgotLink = document.getElementById('forgotPasswordLink');
+    if (forgotLink) {
+      forgotLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        console.log('Forgot password link clicked');
+        alert('🔒 Password Reset\n\nPlease contact the canteen administration for password recovery.');
+      });
+    } else {
+      console.error('Forgot password link not found!');
+    }
+
+    // Auto-fill if coming from signup
+    const signupData = sessionStorage.getItem('newSignup');
+    if (signupData) {
+      try {
+        const data = JSON.parse(signupData);
+        if (allInputs[0]) {
+          allInputs[0].value = data.studentId;
+          allInputs[1]?.focus();
+        }
+        sessionStorage.removeItem('newSignup');
+        console.log('Auto-filled Student ID from signup');
+      } catch (error) {
+        console.error('Error auto-filling:', error);
+      }
+    }
+  });
+</script>
+</body></html>

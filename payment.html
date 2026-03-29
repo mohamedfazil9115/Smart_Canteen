@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Payment Confirmation</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ab2654",
+                        "background-light": "#f8f6f7",
+                        "background-dark": "#1f1317",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(31, 19, 23, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .bg-gradient-custom {
+            background: linear-gradient(180deg, #A92655 0%, #FD8D67 100%);
+        }
+        .glow-effect {
+            box-shadow: 0 0 25px rgba(171, 38, 84, 0.5);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display">
+<!-- Main Container with Vertical Gradient Background -->
+<div class="relative flex min-h-screen w-full flex-col bg-gradient-custom overflow-x-hidden">
+<!-- Top App Bar (IOS Style) -->
+<div class="flex items-center p-6 pb-2 justify-between w-full z-10">
+<button id="paymentBackBtn" onclick="goBackCart()" class="text-white flex size-10 shrink-0 items-center justify-start rounded-full hover:bg-white/10 transition-colors cursor-pointer">
+<span class="material-symbols-outlined">arrow_back_ios</span>
+</button>
+<h2 class="text-white text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-10">Payment Confirmation</h2>
+</div>
+<!-- Content Area -->
+<div class="flex-1 flex flex-col items-center justify-center p-6 gap-8">
+<!-- Glassmorphism Card -->
+<div class="glass-card w-full max-w-md rounded-xl p-8 flex flex-col items-center text-center animate-fade-in">
+<!-- Success Icon with Glow -->
+<div class="w-24 h-24 rounded-full bg-primary flex items-center justify-center mb-6 glow-effect">
+<span class="material-symbols-outlined text-white text-5xl">check_circle</span>
+</div>
+<!-- Success Text -->
+<h1 class="text-white text-3xl font-extrabold mb-2">Payment Successful!</h1>
+<p class="text-white/80 text-base mb-8">Your order has been received and is being prepared by the kitchen.</p>
+<!-- Order Summary Section -->
+<div class="w-full space-y-3 bg-white/5 p-4 rounded-lg mb-4">
+<div class="flex justify-between items-center">
+<p class="text-white/60 text-sm">Order ID</p>
+<p class="text-white font-semibold text-sm">#ORD-55921</p>
+</div>
+<div class="flex justify-between items-center">
+<p class="text-white/60 text-sm">Total Paid</p>
+<p class="text-white font-semibold text-sm">$12.50</p>
+</div>
+<div class="flex justify-between items-center border-t border-white/10 pt-3 mt-1">
+<p class="text-white/60 text-sm">Est. Pickup</p>
+<p class="text-white font-bold text-sm">5-10 mins</p>
+</div>
+</div>
+<!-- Card Action -->
+<button id="viewReceiptBtn" onclick="viewReceipt()" class="text-white/70 text-sm font-medium hover:text-white transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">description</span>
+                    View Full Receipt
+                </button>
+</div>
+<!-- Main Actions -->
+<div class="w-full max-w-md flex flex-col gap-4">
+<!-- Primary Gradient CTA -->
+<button id="viewQRCodeBtn" onclick="goToPickup()" class="w-full flex cursor-pointer items-center justify-center overflow-hidden rounded-full h-14 px-6 bg-primary text-white text-lg font-bold shadow-xl transition-transform active:scale-95">
+<span class="truncate">View Order QR Code</span>
+</button>
+<!-- Secondary Button -->
+<button id="backToMenuBtn" onclick="backToMenu()" class="w-full flex cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-6 bg-white/10 text-white text-base font-semibold backdrop-blur-sm border border-white/20 transition-all hover:bg-white/20">
+<span class="truncate">Back to Menu</span>
+</button>
+</div>
+</div>
+<!-- Bottom Spacer for iOS Notch -->
+<div class="h-8 w-full"></div>
+<!-- Decorative Elements -->
+<div class="absolute top-1/4 -left-20 w-64 h-64 bg-primary/20 rounded-full blur-[100px] pointer-events-none"></div>
+<div class="absolute bottom-1/4 -right-20 w-64 h-64 bg-orange-400/20 rounded-full blur-[100px] pointer-events-none"></div>
+</div>
+<script>
+  // Global variables
+  let orderID = '';
+  let orderTotal = '';
+  let paymentMethod = '';
+  
+  // Global functions that can be called from onclick
+  function goBackCart() {
+    console.log('goBackCart() called');
+    window.location.href = 'cart.html';
+  }
+  
+  function viewReceipt() {
+    console.log('viewReceipt() called');
+    alert('📄 Order Receipt\n\nOrder ID: ' + orderID + '\nAmount: ₹' + orderTotal + '\nPayment Method: ' + paymentMethod + '\n\nThank you for your order!');
+  }
+  
+  function goToPickup() {
+    console.log('goToPickup() called');
+    window.location.href = 'pickup.html';
+  }
+  
+  function backToMenu() {
+    console.log('backToMenu() called');
+    if (confirm('Are you sure? This will clear your cart.')) {
+      localStorage.removeItem('cart');
+      window.location.href = 'menu.html';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('Payment page loaded - DOMContentLoaded fired');
+    
+    // Get order details from localStorage
+    orderID = localStorage.getItem('orderID') || '#ORD-55921';
+    orderTotal = localStorage.getItem('orderTotal') || '12.50';
+    paymentMethod = localStorage.getItem('paymentMethod') || 'UPI';
+    
+    console.log('Order Details:', { orderID, orderTotal, paymentMethod });
+    
+    // Update order details on page
+    const orderItems = document.querySelectorAll('.space-y-3.bg-white\/5 .flex.justify-between');
+    console.log('Order items found:', orderItems.length);
+    
+    if (orderItems[0]) {
+      orderItems[0].querySelector('p:last-child').textContent = orderID;
+      console.log('Updated Order ID to:', orderID);
+    }
+    if (orderItems[1]) {
+      orderItems[1].querySelector('p:last-child').textContent = '₹' + (parseFloat(orderTotal) || 0).toFixed(2);
+      console.log('Updated Total to:', orderTotal);
+    }
+    
+    console.log('Page setup complete');
+  });
+</script>
+</body></html>
